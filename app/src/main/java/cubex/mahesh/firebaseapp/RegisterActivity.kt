@@ -1,9 +1,12 @@
 package cubex.mahesh.firebaseapp
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -25,10 +28,19 @@ class RegisterActivity : AppCompatActivity() {
 
     fun register(v:View)
     {
+        var fuser = FirebaseAuth.getInstance().
+                    currentUser?.uid
+        var dBase = FirebaseDatabase.getInstance()
+        var dref = dBase.getReference(fuser)
+        dref.child("name").setValue(et1?.text.toString())
+        dref.child("gender").setValue(et2?.text.toString())
+        dref.child("mno").setValue(et3?.text.toString())
+        dref.child("dob").setValue(et4?.text.toString())
 
-
-
-    }
+        var i = Intent(this@RegisterActivity,
+                StorageActivity::class.java)
+        startActivity(i)
+     }
 
 
 }
